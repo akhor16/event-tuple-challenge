@@ -1,6 +1,6 @@
 # event-tuple
 
-Helper classes for tuples
+Helper classes for Event tuples
 
 ## Install
 
