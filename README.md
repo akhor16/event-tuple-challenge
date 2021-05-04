@@ -8,7 +8,7 @@ Helper classes for Event tuples
 Inside of a new virtualenv, you can pip install this module by doing the following :
 
 ```
-$ .env) pip install git+https://github.com/akhor16/event-tuple-challenge.git@main
+$ .env) pip install git+https://github.com/akhor16/event-tuple-challenge.git@challenge-1
 ```
 
 
