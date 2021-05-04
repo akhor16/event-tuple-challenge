@@ -1,8 +1,8 @@
+import calendar;
+import time;
+import secrets
+
 class UserClickedOnButtonEvent:
-    # event_id_var
-    # timestamp_var
-    # event_type_var
-    # button_id_var
 
     def __init__(self, event_id, timestamp, event_type, button_id):
         self.event_id_var = event_id
@@ -22,13 +22,15 @@ class UserClickedOnButtonEvent:
     def button_id(self):
         return self.button_id_var
 
+    @classmethod
+    def create(cls, event_type, button_id):
+        event_id = secrets.token_hex()
+        timestamp = calendar.timegm(time.gmtime())
+        return cls(event_id, timestamp, event_type, button_id)
+
+
 
 class UserLongPressedEvent:
-    # event_id_var
-    # timestamp_var
-    # event_type_var
-    # x_var
-    # y_var
 
     def __init__(self, event_id, timestamp, event_type, x, y):
         self.event_id_var = event_id
@@ -51,3 +53,9 @@ class UserLongPressedEvent:
 
     def y(self):
         return self.y_var
+    
+    @classmethod
+    def create(cls, event_type, x, y):
+        event_id = secrets.token_hex()
+        timestamp = calendar.timegm(time.gmtime())
+        return cls(event_id, timestamp, event_type, x, y)
