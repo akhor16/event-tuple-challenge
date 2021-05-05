@@ -13,7 +13,7 @@ $ .env) pip install git+https://github.com/akhor16/event-tuple-challenge.git@cha
 
 To clone the challenge-4 branch 
 ```
-$ .env) git clone -b challenge-4 https://github.com/akhor16/event-tuple-challenge.git
+$ .env) git clone -b challenge-3 https://github.com/akhor16/event-tuple-challenge.git
 ```
 
 
