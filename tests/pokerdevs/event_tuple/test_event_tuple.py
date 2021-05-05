@@ -1,5 +1,7 @@
 import pytest
 import logging
+import calendar
+import time
 from pokerdevs import event_tuple
 
 
@@ -7,15 +9,14 @@ logger = logging.getLogger(__name__)
 
 
 def generate_test_user_clicked_on_button_events():
-    yield event_tuple.UserClickedOnButtonEvent(timestamp = 1619579189, event_id = "k3196505-99hh-55z5-555a-9d31f3z253v4", button_id = "close_button", event_type = "UserClickedOnButton")
-    yield event_tuple.UserClickedOnButtonEvent("b5796505-68fd-40d5-814a-9d31f3f084b0", 1619146052, "UserClickedOnButton", "close_button")
-    yield event_tuple.UserClickedOnButtonEvent.create("UserClickedOnButton", "open_button")
+    yield event_tuple.UserClickedOnButtonEvent(button_id = "close_button", event_type = "UserClickedOnButton")
+    yield event_tuple.UserClickedOnButtonEvent("UserClickedOnButton", "close_button")
 
 
 def generate_test_user_long_pressed_events():
-    yield event_tuple.UserLongPressedEvent(y = 420, event_id = "2s5ss900-a8bb-a8bb-a8bb-6q5kk89ggggg", timestamp = 1619146778, event_type = "UserLongPressed", x = 88)
-    yield event_tuple.UserLongPressedEvent("1d0bfda2-fe1d-4c61-a8bb-2c7df89beddf", 1619146123, "UserLongPressed", 10, 48)
-    yield event_tuple.UserLongPressedEvent.create("UserLongPressed", 55, 428)
+    yield event_tuple.UserLongPressedEvent(y = 420, event_type = "UserLongPressed", x = 88)
+    yield event_tuple.UserLongPressedEvent("UserLongPressed", 10, 48)
+
 
 def serialize_event(event):
     return f"Event '{event.event_type()}' occurred at {event.timestamp()} with ID: {event.event_id()}"
@@ -25,47 +26,40 @@ def test_user_clicked_on_button():
     logger.info(f"Starting the test !")
     events = list(generate_test_user_clicked_on_button_events())
     event_0 = events[0]
-    assert event_0.event_id() == "k3196505-99hh-55z5-555a-9d31f3z253v4"
-    assert event_0.timestamp() == 1619579189
+    logger.info(event_0.event_id())
+
+
+    timestamp = calendar.timegm(time.gmtime())
+    assert event_0.timestamp() > timestamp - 60 and event_0.timestamp() < timestamp + 60
     assert event_0.event_type() == "UserClickedOnButton"
     assert event_0.button_id() == "close_button"
-    assert serialize_event(event_0) == "Event 'UserClickedOnButton' occurred at 1619579189 with ID: k3196505-99hh-55z5-555a-9d31f3z253v4"
+    info_text = serialize_event(event_0)
+    logger.info(info_text)
 
     event_1 = events[1]
-    assert event_1.event_id() == "b5796505-68fd-40d5-814a-9d31f3f084b0"
-    assert event_1.timestamp() == 1619146052
+    timestamp = calendar.timegm(time.gmtime())
+    assert event_1.timestamp() > timestamp - 60 and event_1.timestamp() < timestamp + 60
+
     assert event_1.event_type() == "UserClickedOnButton"
     assert event_1.button_id() == "close_button"
-    assert serialize_event(event_1) == "Event 'UserClickedOnButton' occurred at 1619146052 with ID: b5796505-68fd-40d5-814a-9d31f3f084b0"
-    
-    event_2 = events[2]
-    assert event_2.event_type() == "UserClickedOnButton"
-    assert event_2.button_id() == "open_button"
-    assert event_2.event_id is not None
-    assert event_2.timestamp is not None
+    logger.info(serialize_event(event_1))
 
     
 def test_user_long_pressed():
     events = list(generate_test_user_long_pressed_events())
     event_0 = events[0]
-    assert event_0.event_id() == "2s5ss900-a8bb-a8bb-a8bb-6q5kk89ggggg"
-    assert event_0.timestamp() == 1619146778
+    timestamp = calendar.timegm(time.gmtime())
+    assert event_0.timestamp() > timestamp - 60 and event_0.timestamp() < timestamp + 60
     assert event_0.event_type() == "UserLongPressed"
     assert event_0.x() == 88
     assert event_0.y() == 420
-    assert serialize_event(event_0) == "Event 'UserLongPressed' occurred at 1619146778 with ID: 2s5ss900-a8bb-a8bb-a8bb-6q5kk89ggggg"
+    logger.info(serialize_event(event_0))
 
     event_1 = events[1]
-    assert event_1.event_id() == "1d0bfda2-fe1d-4c61-a8bb-2c7df89beddf"
-    assert event_1.timestamp() == 1619146123
+    timestamp = calendar.timegm(time.gmtime())
+    assert event_1.timestamp() > timestamp - 60 and event_1.timestamp() < timestamp + 60
+
     assert event_1.event_type() == "UserLongPressed"
     assert event_1.x() == 10
     assert event_1.y() == 48
-    assert serialize_event(event_1) == "Event 'UserLongPressed' occurred at 1619146123 with ID: 1d0bfda2-fe1d-4c61-a8bb-2c7df89beddf"
-
-    event_2 = events[2]
-    assert event_2.event_id is not None
-    assert event_2.timestamp is not None
-    assert event_2.event_type() == "UserLongPressed"
-    assert event_2.x() == 55
-    assert event_2.y() == 428
+    logger.info(serialize_event(event_1))

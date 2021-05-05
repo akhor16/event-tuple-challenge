@@ -1,12 +1,13 @@
 import calendar;
 import time;
 import secrets
+import ulid, uuid
+from math import floor
 
 class UserClickedOnButtonEvent:
 
-    def __init__(self, event_id, timestamp, event_type, button_id):
-        self.event_id_var = event_id
-        self.timestamp_var = timestamp
+    def __init__(self, event_type, button_id):
+        self.event_id_var = ulid.new()
         self.event_type_var = event_type
         self.button_id_var = button_id
 
@@ -14,7 +15,8 @@ class UserClickedOnButtonEvent:
         return self.event_id_var
 
     def timestamp(self):
-        return self.timestamp_var
+        #initial event_id_var.timestamp().int value is in milliseconds, it is converted to standard seconds timestamp
+        return floor(self.event_id_var.timestamp().int/1000)
         
     def event_type(self):
         return self.event_type_var
@@ -22,19 +24,11 @@ class UserClickedOnButtonEvent:
     def button_id(self):
         return self.button_id_var
 
-    @classmethod
-    def create(cls, event_type, button_id):
-        event_id = secrets.token_hex()
-        timestamp = calendar.timegm(time.gmtime())
-        return cls(event_id, timestamp, event_type, button_id)
-
-
 
 class UserLongPressedEvent:
 
-    def __init__(self, event_id, timestamp, event_type, x, y):
-        self.event_id_var = event_id
-        self.timestamp_var = timestamp
+    def __init__(self, event_type, x, y):
+        self.event_id_var = ulid.new()
         self.event_type_var = event_type
         self.x_var = x
         self.y_var = y
@@ -43,7 +37,8 @@ class UserLongPressedEvent:
         return self.event_id_var
 
     def timestamp(self):
-        return self.timestamp_var
+        #initial event_id_var.timestamp().int value is in milliseconds, it is converted to standard seconds timestamp
+        return floor(self.event_id_var.timestamp().int/1000)
         
     def event_type(self):
         return self.event_type_var
@@ -54,8 +49,3 @@ class UserLongPressedEvent:
     def y(self):
         return self.y_var
     
-    @classmethod
-    def create(cls, event_type, x, y):
-        event_id = secrets.token_hex()
-        timestamp = calendar.timegm(time.gmtime())
-        return cls(event_id, timestamp, event_type, x, y)
