@@ -11,10 +11,14 @@ Inside of a new virtualenv, you can pip install this module by doing the followi
 $ .env) pip install git+https://github.com/akhor16/event-tuple-challenge.git@challenge-1
 ```
 
+To clone the challenge-1 branch 
+```
+$ .env) git clone -b challenge-1 https://github.com/akhor16/event-tuple-challenge.git
+```
 
 ## How to test
 
-We make use of `pytest` which can be launched as follows:
+We make use of `pytest` which can be launched from the project directory as follows:
 
 ```
 $ .env) pytest -s
