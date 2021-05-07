@@ -1,25 +1,18 @@
 # event-tuple
 
-Helper classes for Event tuples
+# Challenge 5
+## Making EventTuple general
 
-## Install
+There are several ways to use EventTuple() instead of 2 different classes.
+First, we can have UserClickedOnButtonEvent and UserLongPressedEvent class instances in EventTuple, so in EventTuple we will be able to determine which class constructor to call, in this case after calling a certain method, for example event_id(), the corresponding UserClickedOnButtonEvent or UserLongPressedEvent class object's method will be called.
 
-
-Inside of a new virtualenv, you can pip install this module by doing the following :
-
+Another way is to have one general EventTuple class, with union methods from both classes.
+Inside EventTuple's constructor the passed arguments can be stored as fields by storing the information inside __dict__ of the class (vars() returns __dict__), like the following to keep the instances.
 ```
-$ .env) pip install git+https://github.com/akhor16/event-tuple-challenge.git@challenge-4
+for event_registry in __events_registry:
+    vars().update({
+      'nameOfTheVariable':value
+    })
 ```
-To clone the challenge-4 branch 
-```
-$ .env) git clone -b challenge-4 https://github.com/akhor16/event-tuple-challenge.git
-```
+In that way now we have EventTuple class object with the fields developer passed to the constructor.
 
-
-## How to test
-
-We make use of `pytest` which can be launched from the project directory as follows:
-
-```
-$ .env) pytest -s
-```
