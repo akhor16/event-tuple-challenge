@@ -8,9 +8,15 @@ First, we can have UserClickedOnButtonEvent and UserLongPressedEvent class insta
 
 Another way is to have one general EventTuple class, with union methods from both classes.
 Inside EventTuple's constructor the passed arguments can be stored as fields by storing the information inside __dict__ of the class (vars() returns __dict__), like the following to keep the instances.
+
 ```
 vars().update(dictionary_of_fields_given_as_an_argument_to_the_constructor) 
 ```
+or if we have list of field's name:value pairs:
+```
+for field in fields_list_arg:
+  vars().update(field[0]: field[1])
 
+```
 In that way now we have EventTuple class object with the fields developer passed to the constructor.
 
